@@ -19,12 +19,12 @@ with open(path, encoding='utf-8') as cook_file:
     for string in cook_file:
         dish = string.strip()
         #print(dish)# Выбираем из файла название блюда
-        ingredients_count = int(cook_file.readline().strip())  # Выбираем из файла количество ингредиентов И обрезаем пробелы
+        ingredients_count = int(cook_file.readline().strip())  # Выбираем из файла количество ингредиентов
         dish_dict = []  # Создаем пустой список для словарей с блюдами поваренной книги
         for item in range(ingredients_count):
-            #  Выбираем из файла ингредиенты по разделителю '|' и обрезаем пробелы
+            #  Выбираем из файла ингредиенты по разделителю '|'
             ingredient_name, quantity, measure = cook_file.readline().strip().split('|')
-
+            #print(ingredient_name, quantity, measure)
             #  Добавляем в список словари с ингредиентами
             dish_dict.append({'ingredient_name': ingredient_name, 'quantity': quantity, 'measure': measure})
         cook_book[dish] = dish_dict  #  Добавляем в поваренную книгу блюда и их ингредиенты
@@ -42,8 +42,7 @@ def get_shop_list_by_dishes(dishes, person_count):
             ingredient_list = dict([(ingredient['ingredient_name'],
                                      {'quantity': int(ingredient['quantity']) * person_count,
                                       'measure': ingredient['measure']})])
-            #  Проверяем заказанное блюдо на предмет повтора, если блюдо уже есть в списке, то увеличиваем количество
-            #  Иначе добавляем ингредиент в список покупок
+            print(ingredient_list)
             if grocery_dict.get(ingredient['ingredient_name']) == 'None':
                 _merger = (int(grocery_dict[ingredient['ingredient_name']]['quantity']) +
                            int(ingredient_list[ingredient['ingredient_name']]['quantity']))
@@ -53,4 +52,4 @@ def get_shop_list_by_dishes(dishes, person_count):
     return grocery_dict
 
 
-print(get_shop_list_by_dishes(['Запеченный картофель',  'Омлет'], 2))
+get_shop_list_by_dishes(['Запеченный картофель',  'Омлет'], 2)
