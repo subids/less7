@@ -1,13 +1,4 @@
 
-#
-# with open('dish.txt', encoding='utf-8') as f:
-#        rez = []
-#        for line in f:
-#         data = line.split(' | ')
-#         rez.append({'name': data[0],
-#                     'stock': data[1],
-#                     'price': int(data[2])})
-# print(rez)
 
 #
 import os
@@ -22,7 +13,7 @@ with open(path, encoding='utf-8') as cook_file:
         ingredients_count = int(cook_file.readline().strip())  # Выбираем из файла количество ингредиентов
         dish_dict = []  # Создаем пустой список для словарей с блюдами поваренной книги
         for item in range(ingredients_count):
-            #  Выбираем из файла ингредиенты по разделителю '|'
+            #  Парсрсим разделителю '|'
             ingredient_name, quantity, measure = cook_file.readline().strip().split('|')
             #print(ingredient_name, quantity, measure)
             #  Добавляем в список словари с ингредиентами
@@ -42,14 +33,16 @@ def get_shop_list_by_dishes(dishes, person_count):
             ingredient_list = dict([(ingredient['ingredient_name'],
                                      {'quantity': int(ingredient['quantity']) * person_count,
                                       'measure': ingredient['measure']})])
-            print(ingredient_list)
+
             if grocery_dict.get(ingredient['ingredient_name']) == 'None':
                 _merger = (int(grocery_dict[ingredient['ingredient_name']]['quantity']) +
                            int(ingredient_list[ingredient['ingredient_name']]['quantity']))
                 grocery_dict[ingredient['ingredient_name']]['quantity'] = _merger
             else:
                 grocery_dict.update(ingredient_list)
+                print(ingredient_list)
     return grocery_dict
 
 
-get_shop_list_by_dishes(['Запеченный картофель',  'Омлет'], 2)
+
+get_shop_list_by_dishes(['Запеченный картофель',  'Омлет', 'Омлет'], 2)
